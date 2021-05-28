@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="xero_account_payments_form_view" model="ir.ui.view">
+		<field name="name">account.account.form.inherit</field>
+		<field name="model">account.payment</field>
+		<field name="inherit_id" ref="account.view_account_payment_form" />
+		<field name="arch" type="xml">
+
+			<field name="date" position="after">
+				<field name="xero_payment_id" readonly="1" help="Xero Payment Id which gets generated automatically after creating account"/>
+				<field name="xero_prepayment_id" readonly="1" help="Xero Payment Id which gets generated automatically after creating account"/>
+				<field name="xero_overpayment_id" readonly="1" help="Xero Payment Id which gets generated automatically after creating account"/>
+			</field>
+
+		</field>
+	</record>
+
+	<record id="xero_view_account_payment_filter" model="ir.ui.view">
+            <field name="name">account.payment.search.xero</field>
+            <field name="model">account.payment</field>
+			<field name="inherit_id" ref="account.view_account_payment_search" />
+            <field name="arch" type="xml">
+                <filter name="transfers_filter" position="after">
+					<separator/>
+					<filter name="prepayments" string="Prepayments" domain="[('xero_prepayment_id', '!=', False)]"/>
+					<filter name="prepayments" string="Overpayments" domain="[('xero_overpayment_id', '!=', False)]"/>
+				</filter>
+			</field>
+	</record>
+
+	<!--CODE FOR EXPORTING PAYMENTS FROM ODOO TO XERO-->
+	<record model="ir.actions.server" id="export_payments_to_xero">
+        <field name="name">Export to XERO</field>
+        <field name="model_id" ref="account.model_account_payment"/>
+        <field name="binding_model_id" ref="account.model_account_payment"/>
+        <field name="state">code</field>
+        <field name="code">if records:
+               action = records.create_payment_in_xero()
+        </field>
+    </record>
+
+</odoo>

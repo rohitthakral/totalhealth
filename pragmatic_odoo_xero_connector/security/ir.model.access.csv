@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_xero_account_account,access_xero_account_account,model_xero_account_account,,1,1,1,1
+access_xero_tax_type,access_xero_tax_type,model_xero_tax_type,base.group_user,1,1,1,1
+access_xero_error_log,access_xero_error_log,model_xero_error_log,base.group_user,1,1,1,1
+access_res_company_message,access_res_company_message,model_res_company_message,base.group_user,1,1,1,1

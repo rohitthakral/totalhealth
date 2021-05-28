@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="xero_account_form_view" model="ir.ui.view">
+		<field name="name">account.account.form.inherit</field>
+		<field name="model">account.account</field>
+		<field name="inherit_id" ref="account.view_account_form" />
+		<field name="arch" type="xml">
+
+			<xpath expr="//field[@name='deprecated']" position="after">
+                <separator name="configuration" string="Xero Accounting"/>
+                 <field name="xero_account_id" readonly="1" help="Xero Account Id which gets generated automatically after creating account"/>
+				 <field name="enable_payments_to_account"/>
+				 <field name="xero_account_type" widget="selection"/>
+				 <field name="xero_description"/>
+				 <field name="xero_tax_type_for_accounts"/>
+            </xpath>
+
+		</field>
+	</record>
+
+	<!--CODE FOR ADDING ACCOUNT TYPE DETAILS STATICALLY INTO CUSTOM ACCOUNT TYPE FIELD-->
+	<record id="xero_account_type_1" model="xero.account.account">
+            <field name="xero_account_type_name">Current Asset account</field>
+	</record>
+	<record id="xero_account_type_2" model="xero.account.account">
+            <field name="xero_account_type_name">Current Liability account</field>
+	</record>
+	<record id="xero_account_type_3" model="xero.account.account">
+            <field name="xero_account_type_name">Depreciation account</field>
+	</record>
+	<record id="xero_account_type_4" model="xero.account.account">
+            <field name="xero_account_type_name">Direct Costs account</field>
+	</record>
+	<record id="xero_account_type_5" model="xero.account.account">
+            <field name="xero_account_type_name">Equity account</field>
+	</record>
+	<record id="xero_account_type_6" model="xero.account.account">
+            <field name="xero_account_type_name">Expense account</field>
+	</record>
+	<record id="xero_account_type_7" model="xero.account.account">
+            <field name="xero_account_type_name">Fixed Asset account</field>
+	</record>
+	<record id="xero_account_type_8" model="xero.account.account">
+            <field name="xero_account_type_name">Inventory Asset account</field>
+	</record>
+	<record id="xero_account_type_9" model="xero.account.account">
+            <field name="xero_account_type_name">Liability account</field>
+	</record>
+	<record id="xero_account_type_10" model="xero.account.account">
+            <field name="xero_account_type_name">Non-current Asset account</field>
+	</record>
+	<record id="xero_account_type_11" model="xero.account.account">
+            <field name="xero_account_type_name">Other Income account</field>
+	</record>
+	<record id="xero_account_type_12" model="xero.account.account">
+            <field name="xero_account_type_name">Overhead account</field>
+	</record>
+	<record id="xero_account_type_13" model="xero.account.account">
+            <field name="xero_account_type_name">Prepayment account</field>
+	</record>
+	<record id="xero_account_type_14" model="xero.account.account">
+            <field name="xero_account_type_name">Revenue account</field>
+	</record>
+	<record id="xero_account_type_15" model="xero.account.account">
+            <field name="xero_account_type_name">Sale account</field>
+	</record>
+	<record id="xero_account_type_16" model="xero.account.account">
+            <field name="xero_account_type_name">Non-current Liability account</field>
+	</record>
+
+	<!--CODE FOR EXPORTING ACCOUNTS FROM ODOO TO XERO,Creates an option as 'Export to XERO' in server Action drop-down-->
+	<record model="ir.actions.server" id="export_account_to_xero">
+        <field name="name">Export to XERO</field>
+        <field name="model_id" ref="account.model_account_account"/>
+		<field name="binding_model_id" ref="account.model_account_account"/>
+        <field name="state">code</field>
+        <field name="code">if records:
+               action = records.create_account_in_xero()
+        </field>
+    </record>
+
+	<record model="ir.ui.view" id="analytics_accounts_group_form_view">
+		<field name="name">analytics.group.form.view.inherit</field>
+		<field name="model">account.analytic.group</field>
+		<field name="inherit_id" ref="analytic.account_analytic_group_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='parent_id']" position="after">
+                 <field name="xero_tracking_id" readonly="1"/>
+                 <field name="is_active" widget="checkbox"/>
+            </xpath>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="analytics_accounts_form_view">
+		<field name="name">analytics.accounts.form.view.inherit</field>
+		<field name="model">account.analytic.account</field>
+		<field name="inherit_id" ref="analytic.view_account_analytic_account_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                 <field name="xero_tracking_opt_id" readonly="1"/>
+                 <field name="is_active" widget="checkbox"/>
+            </xpath>
+		</field>
+	</record>
+
+    <record model="ir.actions.server" id="export_analytic_account_group_to_xero">
+        <field name="name">Export to XERO</field>
+        <field name="model_id" ref="analytic.model_account_analytic_group"/>
+        <field name="binding_model_id" ref="analytic.model_account_analytic_group"/>
+		<field name="state">code</field>
+        <field name="code">if records:
+               action = records.create_analytic_account_group_in_xero()
+        </field>
+    </record>
+
+	<record model="ir.actions.server" id="export_analytic_account_to_xero">
+        <field name="name">Export to XERO</field>
+        <field name="model_id" ref="analytic.model_account_analytic_account"/>
+        <field name="binding_model_id" ref="analytic.model_account_analytic_account"/>
+		<field name="state">code</field>
+        <field name="code">if records:
+               action = records.create_analytic_account_in_xero()
+        </field>
+    </record>
+
+
+
+
+</odoo>

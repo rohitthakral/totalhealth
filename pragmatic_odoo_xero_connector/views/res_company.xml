@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	<record model="ir.ui.view" id="xero_view_company_form">
+		<field name="name">xero.view.company.form</field>
+		<field name="model">res.company</field>
+		<field name="inherit_id" ref="base.view_company_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//notebook/page[1]" position="after">
+				<page string="Xero Accounting">
+					<separator name="configuration" string="Xero Configuration"/>
+					<div>
+						<span>
+							<button string='Authenticate' type="object" name="login" class="oe_highlight" icon="fa-plug"/>
+						</span>
+
+						<span style="margin-left:20px">
+							<button string='Refresh Token' type="object" name="refresh_token" class="oe_highlight" icon="fa-refresh"/>
+						</span>
+
+
+					</div>
+					<notebook>
+					<page name="initial_sync" string='Import'>
+					<!--<separator name='sync' string='Import'/>-->
+
+							<group>
+								<group>
+									<button string="1-Import Accounts/ Tracking Categories" type="object" name="import_accounts" class="oe_highlight" icon="fa-arrow-circle-down"/>
+								</group>
+							</group>
+							<group>
+								<group>
+									<button string="2-Import Taxes" type="object" name="import_tax" class="oe_highlight" icon="fa-arrow-circle-down"/>
+								</group>
+							</group>
+							<group>
+								<group>
+									<button string="3-Import Products" type="object" name="import_products" class="oe_highlight" icon="fa-arrow-circle-down"/>
+								</group>
+							</group>
+							<group>
+								<group>
+							        <button string="4-Import Contact Groups" type="object" name="import_contact_groups" class="oe_highlight" icon="fa-arrow-circle-down"/>
+								</group>
+							</group>
+							<group>
+								<group>
+									<button string="5-Import Contacts" type="object" name="import_customers" class="oe_highlight" icon="fa-arrow-circle-down"/>
+								</group>
+							</group>
+							<group>
+								<group>
+									<button string="6-Import Purchase Order" type="object" name="import_purchase_order" class="oe_highlight" icon="fa-arrow-circle-down"/>
+								</group>
+								<group>
+									<field name="x_purchaseorder_date" />
+								</group>
+							</group>
+							<group>
+								<group>
+									<button string="7-Import Invoice" type="object" name="import_invoice" class="oe_highlight" icon="fa-arrow-circle-down"/>
+								</group>
+								<group>
+									<field name="x_invoice_date" />
+								</group>
+							</group>
+							<group>
+								<group>
+									<button string="8-Import Credit Notes" type="object" name="import_credit_notes" class="oe_highlight" icon="fa-arrow-circle-down"/>
+								</group>
+								<group>
+									<field name="x_credit_note_date" />
+								</group>
+							</group>
+							<group>
+								<group>
+									<button string="9-Import Payments" type="object" name="import_payments" class="oe_highlight" icon="fa-arrow-circle-down"/>
+								</group>
+								<group>
+									<field name="x_payments_date" />
+								</group>
+							</group>
+							<group>
+								<group>
+									<button string="10-Import Prepayments" type="object" name="import_prepayments" class="oe_highlight" icon="fa-arrow-circle-down"/>
+								</group>
+								<group>
+									<field name="x_prepayments_date" />
+								</group>
+							</group>
+                            <group>
+								<group>
+									<button string="11-Import Overpayments" type="object" name="import_overpayments" class="oe_highlight" icon="fa-arrow-circle-down"/>
+								</group>
+								<group>
+									<field name="x_overpayments_date" />
+								</group>
+							</group>
+							<group>
+								<group>
+									<button string="12-Import Sale Order" type="object" name="import_sale_order" class="oe_highlight" icon="fa-arrow-circle-down"/>
+								</group>
+								<group>
+									<field name="x_salesorder_date" />
+								</group>
+							</group>
+							<group>
+								<group>
+									<button string="13-Import Manual Journal" type="object" name="import_manual_journals" class="oe_highlight" icon="fa-arrow-circle-down"/>
+								</group>
+								<group>
+									<field name="x_journal_date" />
+								</group>
+							</group>
+					</page>
+
+					<page name="export_invoices_bills_configuration" string='Export'>
+						<group colspan="4" col='3'>
+							<field name="export_invoice_without_product"/>
+							<field name="export_bill_without_product"/>
+							<field name="non_tracked_item"/>
+							<field name="invoice_status"/>
+						</group>
+					</page>
+
+					<page name="credentials" string="Credentials">
+					<group string="Credentials">
+						<group name="Credential">
+							<field name="xero_client_id" />
+							<field name="xero_client_secret" />
+							<field name="xero_redirect_url"/>
+							<field name="skip_emails" />
+						</group>
+                        <group name="Configuration">
+							<field name="default_account" />
+							<field name="overpayment_journal"/>
+							<field name="prepayment_journal" />
+							<field name="manual_journal" />
+
+						</group>
+						<group name="Url">
+							<field name="xero_auth_base_url" />
+							<field name="xero_tenant_id_url" />
+							<field name="xero_access_token_url" />
+							<field name="xero_tenant_name" readonly="1"/>
+							<field name="xero_country_name" readonly="1"/>
+						</group>
+					</group>
+					</page>
+					</notebook>
+				</page>
+			</xpath>
+		</field>
+	</record>
+	</data>
+</odoo>

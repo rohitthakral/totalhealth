@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="xero_account_tax_form_view" model="ir.ui.view">
+		<field name="name">account.tax.form.inherit</field>
+		<field name="model">account.tax</field>
+		<field name="inherit_id" ref="account.view_tax_form" />
+		<field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="xero_tax_type_id" readonly="1" />
+                <field name="xero_record_taxtype" invisible="1"/>
+                <!--<field name="xero_tax_status" readonly="1"/>-->
+
+            </xpath>
+			<xpath expr="//notebook/page[2]" position="after">
+                <page name="xero_tax_details" string='Xero Accounting'>
+                 <!--<field name="xero_tax_id" readonly="1" help="Xero Tax Id which gets generated automatically after creating Tax in Xero"/>-->
+                 <group>
+                     <field name="CanApplyToEquity" />
+                     <field name="CanApplyToLiabilities" />
+                     <field name="CanApplyToRevenue" />
+                     <field name="CanApplyToExpenses" />
+                     <field name="CanApplyToAssets" />
+                     <!--<field name="xero_tax_type_id" />-->
+                 </group>
+                </page>
+            </xpath>
+		</field>
+	</record>
+
+	<!--CODE FOR EXPORTING TAXES FROM ODOO TO XERO-->
+	<record model="ir.actions.server" id="export_account_tax_to_xero">
+        <field name="name">Export to XERO</field>
+        <field name="model_id" ref="account.model_account_tax"/>
+        <field name="binding_model_id" ref="account.model_account_tax"/>
+        <field name="state">code</field>
+        <field name="code">if records:
+               action = records.create_tax_in_xero()
+        </field>
+    </record>
+
+</odoo>

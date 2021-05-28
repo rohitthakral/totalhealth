@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--We maintain the error logs of all the Transactions-->
+    <record id="view_account_payment_log_form" model="ir.ui.view">
+        <field name="name">xero.error.log.form</field>
+        <field name="model">xero.error.log</field>
+        <field name="arch" type="xml">
+            <form string="Xero Error Logs">
+                <sheet>
+                <group>
+                    <group>
+                        <field name="transaction"/>
+                        <field name="error_date"/>
+                    </group>
+
+                    <group>
+                        <field name="record_id"/>
+                        <field name="xero_error_response"/>
+                    </group>
+                </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_xero_error_log_tree" model="ir.ui.view">
+        <field name="name">xero.error.log.tree</field>
+        <field name="model">xero.error.log</field>
+        <field name="arch" type="xml">
+            <tree string="Xero Error Logs">
+                <field name="transaction"/>
+                <field name="error_date"/>
+                <field name="record_id"/>
+                <!--<field name="xero_error_response"/>-->
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_xero_error_log_form" model="ir.actions.act_window">
+        <field name="name">Xero Logs</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">xero.error.log</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="domain"></field>
+    </record>
+
+   	<menuitem action="action_xero_error_log_form" id="menu_action_xero_error_logs_form_sale" parent="sale.sale_menu_root"/>
+	<menuitem action="action_xero_error_log_form" id="menu_action_xero_error_logs_form_purchase" parent="purchase.menu_purchase_root"/>
+	<menuitem action="action_xero_error_log_form" id="menu_action_xero_error_logs_form_invoice" parent="account.menu_finance"/>
+</odoo>

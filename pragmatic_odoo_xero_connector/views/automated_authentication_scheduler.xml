@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record forcecreate="True" id="ir_cron_xero_authentication_refresh_token" model="ir.cron">
+            <field name="name">Xero Authentication</field>
+            <field name="model_id" ref="model_res_company"/>
+            <field name="state">code</field>
+            <field name="code">model.refresh_token()</field>
+            <field name="user_id" ref="base.user_admin" />
+            <field name="interval_number">25</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="active" eval="True" />
+        </record>
+
+
+        <record id="ir_cron_xero_purchase_order" model="ir.cron">
+            <field name="name">Xero Export Purchase Order</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="state">code</field>
+            <field name="code">model.exportPurchaseOrder_cron()</field>
+            <field name="user_id" ref="base.user_admin" />
+            <field name="interval_number">25</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="active" eval="False" />
+        </record>
+
+
+
+        <record id="ir_cron_xero_Invoice_order" model="ir.cron">
+            <field name="name">Xero Export Invoice/Journal </field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="state">code</field>
+            <field name="code">model.exportInvoice_cron()</field>
+            <field name="user_id" ref="base.user_admin" />
+            <field name="interval_number">25</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="active" eval="False" />
+        </record>
+
+
+
+        <record id="ir_cron_xero_payement_import" model="ir.cron">
+            <field name="name">Xero Import Payment </field>
+            <field name="model_id" ref="model_res_company"/>
+            <field name="state">code</field>
+            <field name="code">model.import_payments_cron()</field>
+            <field name="user_id" ref="base.user_admin" />
+            <field name="interval_number">25</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="active" eval="False" />
+        </record>
+
+
+
+        <record id="ir_cron_xero_invoice_import" model="ir.cron">
+            <field name="name">Xero Import Invoice </field>
+            <field name="model_id" ref="model_res_company"/>
+            <field name="state">code</field>
+            <field name="code">model.import_invoice_cron()</field>
+            <field name="user_id" ref="base.user_admin" />
+            <field name="interval_number">25</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="active" eval="False" />
+        </record>
+
+
+         <record id="ir_cron_xero_manual_journal_import" model="ir.cron">
+            <field name="name">Xero Import Manual Journal </field>
+            <field name="model_id" ref="model_res_company"/>
+            <field name="state">code</field>
+            <field name="code">model.import_manual_journal_cron()</field>
+            <field name="user_id" ref="base.user_admin" />
+            <field name="interval_number">25</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="active" eval="False" />
+        </record>
+
+
+
+
+
+        <record id="ir_cron_xero_purchase_order_import" model="ir.cron">
+            <field name="name">Xero Import Purchase Order </field>
+            <field name="model_id" ref="model_res_company"/>
+            <field name="state">code</field>
+            <field name="code">model.import_purchase_order_cron()</field>
+            <field name="user_id" ref="base.user_admin" />
+            <field name="interval_number">25</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="active" eval="False" />
+        </record>
+
+
+
+
+        <record id="ir_cron_xero_sale_order_import" model="ir.cron">
+            <field name="name">Xero Import Sale Order </field>
+            <field name="model_id" ref="model_res_company"/>
+            <field name="state">code</field>
+            <field name="code">model.import_sale_order()</field>
+            <field name="user_id" ref="base.user_admin" />
+            <field name="interval_number">15</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="active" eval="False" />
+        </record>
+
+
+        <record id="ir_cron_xero_payment_export" model="ir.cron">
+            <field name="name">Xero Export Payments</field>
+            <field name="model_id" ref="model_account_payment"/>
+            <field name="state">code</field>
+            <field name="code">model.exportPayment_cron()</field>
+            <field name="user_id" ref="base.user_admin" />
+            <field name="interval_number">15</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="active" eval="False" />
+        </record>
+
+
+    </data>
+</odoo>

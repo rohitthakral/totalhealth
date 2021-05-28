@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="xero_purchase_form_view" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                 <field name="xero_purchase_id" readonly="1"/>
+            </xpath>
+            <xpath expr="//field[@name='date_order']" position="after">
+                 <field name="tax_state"/>
+
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page[1]/field[@name='order_line']/tree/field[@name='name']" position="after">
+                <field name="xero_purchase_line_id" string="Xero Id" readonly="1" invisible="1"/>
+            </xpath>
+
+            <xpath expr="/form/sheet/notebook/page[1]/field[@name='order_line']/tree/field[@name='taxes_id']" position="replace">
+                <field name="inclusive" invisible="1"/>
+                <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use','=','purchase'),('price_include','=', inclusive)]" context="{'default_type_tax_use': 'purchase'}" options="{'no_create': True}"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!--CODE FOR EXPORTING PURCHASE ORDER FROM ODOO TO XERO,Creates an option as 'Export to XERO' in server Action drop-down-->
+    <record model="ir.actions.server" id="export_purchaseorder_to_xero">
+        <field name="name">Export to XERO</field>
+        <field name="model_id" ref="purchase.model_purchase_order"/>
+        <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+        <field name="state">code</field>
+        <field name="code">if records:
+               action = records.exportPurchaseOrder()
+        </field>
+    </record>
+
+</odoo>

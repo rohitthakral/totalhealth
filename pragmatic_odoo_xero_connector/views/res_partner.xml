@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="xero_partner_form_view" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='category_id']" position="after">
+                 <field name="xero_cust_id" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+	<!--CODE FOR EXPORTING CUSTOMER AND VENDOR FROM ODOO TO XERO,Creates an option as 'Export to XERO' in server Action drop-down-->
+    <record model="ir.actions.server" id="export_customer_to_xero">
+        <field name="name">Export to XERO</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+        <field name="state">code</field>
+        <field name="code">if records:
+               action = records.create_customer_in_xero()
+        </field>
+    </record>
+</odoo>

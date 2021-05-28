@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="xero_invoice_form_view" model="ir.ui.view">
+		<field name="name">account.move.form.inherit123</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account.view_move_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='partner_id']" position="after">
+                <field name="xero_invoice_id" readonly="1"/>
+				<field name="xero_invoice_number" readonly="1" attrs="{'invisible': [('xero_invoice_id','=',False)]}"/>
+			</xpath>
+
+			<xpath expr="//field[@name='invoice_date']" position="after">
+                 <field name="tax_state"/>
+
+            </xpath>
+			<xpath expr="/form/sheet/notebook/page[1]/field[@name='invoice_line_ids']/tree/field[@name='name']" position="after">
+		    	<field name="xero_invoice_line_id" string="Xero Id" invisible="1"/>
+		    </xpath>
+			<xpath expr="/form/sheet/notebook/page[1]/field[@name='invoice_line_ids']/tree/field[@name='tax_ids']" position="replace">
+                <field name="inclusive" invisible="1"/>
+                <field name="tax_ids" widget="many2many_tags" domain="[('type_tax_use','=','sale'),('price_include','=', inclusive)]" context="{'default_type_tax_use': 'sale'}" options="{'no_create': True}"/>
+            </xpath>
+
+			<!--<xpath expr="/form/sheet/notebook/page[1]/field[@name='invoice_line_ids']/tree/field[@name='discount']" position="attributes">-->
+		    	<!--<attribute name="invisible">[('type', '=', 'in_invoice')]</attribute>-->
+		    <!--</xpath>-->
+		</field>
+	</record>
+
+<!--	<record id="xero_vendor_bill_form_view" model="ir.ui.view">-->
+<!--		<field name="name">account.move.supplier.form.inherit</field>-->
+<!--		<field name="model">account.move</field>-->
+<!--		<field name="inherit_id" ref="account.view_move_form" />-->
+<!--		<field name="arch" type="xml">-->
+<!--			<xpath expr="//field[@name='partner_id']" position="after">-->
+<!--                <field name="xero_invoice_id" readonly="1"/>-->
+<!--				<field name="xero_invoice_number" readonly="1" attrs="{'invisible': [('xero_invoice_id','=',False)]}"/>-->
+<!--			</xpath>-->
+<!--			<xpath expr="//field[@name='invoice_date']" position="after">-->
+<!--                 <field name="tax_state"/>-->
+
+<!--            </xpath>-->
+<!--			<xpath expr="/form/sheet/notebook/page[1]/field[@name='invoice_line_ids']/tree/field[@name='name']" position="after">-->
+<!--		    	<field name="xero_invoice_line_id" string="Xero Id" invisible="1"/>-->
+<!--		    </xpath>-->
+<!--			<xpath expr="/form/sheet/notebook/page[1]/field[@name='invoice_line_ids']/tree/field[@name='discount']" position="attributes">-->
+<!--		    	<attribute name="invisible">True</attribute>-->
+<!--		    </xpath>-->
+<!--			&lt;!&ndash;<field name="discount" position="attributes">&ndash;&gt;-->
+<!--		    	 &lt;!&ndash;<attribute name="invisible">True</attribute>&ndash;&gt;-->
+<!--		    &lt;!&ndash;</field>&ndash;&gt;-->
+
+<!--			<xpath expr="/form/sheet/notebook/page[1]/field[@name='invoice_line_ids']/tree/field[@name='tax_ids']" position="replace">-->
+<!--                <field name="inclusive" invisible="1"/>-->
+<!--                <field name="tax_ids" widget="many2many_tags" domain="[('type_tax_use','=','purchase'),('price_include','=', inclusive)]" context="{'default_type_tax_use': 'purchase'}" options="{'no_create': True}"/>-->
+<!--            </xpath>-->
+<!--		</field>-->
+<!--	</record>-->
+
+	<!--CODE FOR EXPORTING INVOICE and CREDIT NOTES FROM ODOO TO XERO,Creates an option as 'Export to XERO' in server Action drop-down-->
+	<record model="ir.actions.server" id="export_invoice_to_xero">
+        <field name="name">Export to XERO</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="state">code</field>
+        <field name="code">if records:
+               action = records.exportInvoice()
+        </field>
+    </record>
+
+</odoo>
